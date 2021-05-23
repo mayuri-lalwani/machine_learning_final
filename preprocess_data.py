@@ -16,3 +16,7 @@ def one_hot_encoding_labels(df, _feature):
 def one_dummy_encoding_labels(df, _feature):
     df = pd.concat([df,pd.get_dummies(df[_feature], prefix=_feature)],axis=1)
     return df
+
+def get_numerical_labels(df, _feature):
+    df[_feature].replace(['false', 'pants-fire', 'barely-true', 'half-true', 'mostly-true', 'true'],[0,1,2,3,4,5], inplace=True)
+    return df
