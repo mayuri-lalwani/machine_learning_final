@@ -1,4 +1,5 @@
 import pandas as pd
+import requests
 
 def load_potitifact_data():
     df = pd.read_csv('./dataset/politifact_dataset.csv')
@@ -23,3 +24,14 @@ def load_augument_data():
     df2 = df2[_features]
     df = df1.merge(df2, how='left', on=_features)
     return df
+
+def scrape_data_from_newsapi():
+    # BBC news api
+    my_url = "https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=4aa01326eb3147a881ad8f93863c9663"
+    my_open_bbc_page = requests.get(my_url).json()
+    my_article = my_open_bbc_page["articles"]
+    my_results = []
+    for ar in my_article:
+        my_results.append(ar["title"])
+    df_news = pd.DataFrame(my_results, columns = ['Statement'])
+    return df_news
