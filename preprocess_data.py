@@ -21,3 +21,11 @@ def one_dummy_encoding_labels(df, _feature):
 def get_numerical_labels(df, _feature):
     df[_feature].replace(['false', 'pants-fire', 'barely-true', 'half-true', 'mostly-true', 'true'],[0,1,2,3,4,5], inplace=True)
     return df
+
+def split_train_test_data(df, _source, _target, tain_percent=0.7):
+    X, y = df[_source], df[_target]
+    train_pct_index = int(tain_percent * len(X))
+    print('%s out of %s will be trained' % (train_pct_index, len(X)))
+    X_train, X_test = X[:train_pct_index], X[train_pct_index:]
+    y_train, y_test = y[:train_pct_index], y[train_pct_index:]
+    return X_train, X_test, y_train, y_test
