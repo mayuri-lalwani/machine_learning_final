@@ -1,7 +1,7 @@
 import pandas as pd
 import requests
 
-def c():
+def load_potitifact_data():
     df = pd.read_csv('./dataset/politifact_dataset.csv')
     return df
 
@@ -31,20 +31,13 @@ def load_africacheck_data():
         'not-rated': 'false'
     }
     df.replace({'Verdict': trans_dict}, inplace=True)
+    _features =['Statement', 'Verdict']
+    df = df[_features]
     return df
 
 def load_augument_data():
-    df1 = load_potitifact_data()
-    df2 = load_africacheck_data()
-    _features =['Statement', 'Verdict']
-    df1 = df1[_features]
-    print(df1.head())
-    print(df1.size)
-    df2 = df2[_features]
-    print(df2.head())
-    print(df2.size)
-    df = df1.merge(df2, how='left', on=_features)
-    df.to_csv('dataset/df_merge.csv')
+    df = pd.read_csv('./dataset/augument_dataset.csv')
+    print(df.Verdict.unique())
     return df
 
 def scrape_data_from_newsapi():
